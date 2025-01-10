@@ -47,7 +47,6 @@ describe("Scoreboard", () => {
       scoreboard.updateScore(match2Id, 0, 1);
 
       const summary = scoreboard.getSummary();
-      console.log("summary", summary);
 
       expect(summary[0].homeTeam).toBe("Spain");
     });

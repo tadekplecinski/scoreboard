@@ -43,6 +43,14 @@ export class Scoreboard {
   }
 
   getSummary(): Match[] {
-    return this.matches;
+    return [...this.matches].sort((a, b) => {
+      const isTotalScoreEqual =
+        a.homeScore + a.awayScore === b.homeScore + b.awayScore;
+
+      if (isTotalScoreEqual) {
+        return b.startTime.getTime() - a.startTime.getTime();
+      }
+      return b.homeScore + b.awayScore - (a.homeScore + a.awayScore);
+    });
   }
 }
