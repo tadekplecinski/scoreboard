@@ -71,7 +71,7 @@ describe("Scoreboard", () => {
     });
   });
 
-  describe("Match summary", () => {
+  describe("Match sorting", () => {
     it("should return matches sorted by total score", () => {
       const match1Id = scoreboard.startMatch("Mexico", "Canada");
       scoreboard.updateScore(match1Id, 1, 0);
@@ -79,8 +79,8 @@ describe("Scoreboard", () => {
       const match2Id = scoreboard.startMatch("Spain", "Brazil");
       scoreboard.updateScore(match2Id, 2, 2);
 
-      const summary = scoreboard.getSortedMatches();
-      expect(summary[0].homeTeam).toBe("Spain");
+      const sortedMatches = scoreboard.getSortedMatches();
+      expect(sortedMatches[0].homeTeam).toBe("Spain");
     });
 
     it("should return matches sorted by date if total score is equal", () => {
@@ -94,9 +94,9 @@ describe("Scoreboard", () => {
       const match2Id = scoreboard.startMatch("Spain", "Brazil");
       scoreboard.updateScore(match2Id, 0, 1);
 
-      const summary = scoreboard.getSortedMatches();
+      const sortedMatches = scoreboard.getSortedMatches();
 
-      expect(summary[0].homeTeam).toBe("Spain");
+      expect(sortedMatches[0].homeTeam).toBe("Spain");
 
       jest.useRealTimers();
     });
