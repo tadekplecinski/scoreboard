@@ -5,6 +5,3 @@ export const generateId = (length = 8): string => {
   }
   return result;
 };
-
-export const wait = (time = 100) =>
-  new Promise((resolve) => setTimeout(resolve, time));

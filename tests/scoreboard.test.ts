@@ -1,5 +1,4 @@
 import { Scoreboard } from "../src/scoreboard";
-import { wait } from "../src/utils";
 
 describe("Scoreboard", () => {
   let scoreboard: Scoreboard;
