@@ -31,7 +31,9 @@ export class Scoreboard {
     const match = this.matches.find((m) => m.id === matchId);
 
     if (!match) {
-      throw new Error("Match not found");
+      throw new Error(
+        `Match with ID "${matchId}" not found for updating the score.`
+      );
     }
 
     match.homeScore = homeScore;
@@ -39,18 +41,26 @@ export class Scoreboard {
   }
 
   finishMatch(matchId: string) {
+    const match = this.matches.find((m) => m.id === matchId);
+
+    if (!match) {
+      throw new Error(`Match with ID "${matchId}" not found`);
+    }
+
     this.matches = this.matches.filter((m) => m.id !== matchId);
   }
 
-  getSummary(): Match[] {
-    return [...this.matches].sort((a, b) => {
-      const isTotalScoreEqual =
-        a.homeScore + a.awayScore === b.homeScore + b.awayScore;
+  private sortMatches(a: Match, b: Match): number {
+    const isTotalScoreEqual =
+      a.homeScore + a.awayScore === b.homeScore + b.awayScore;
 
-      if (isTotalScoreEqual) {
-        return b.startTime.getTime() - a.startTime.getTime();
-      }
-      return b.homeScore + b.awayScore - (a.homeScore + a.awayScore);
-    });
+    if (isTotalScoreEqual) {
+      return b.startTime.getTime() - a.startTime.getTime();
+    }
+    return b.homeScore + b.awayScore - (a.homeScore + a.awayScore);
+  }
+
+  getSortedMatches(): Match[] {
+    return [...this.matches].sort(this.sortMatches);
   }
 }
