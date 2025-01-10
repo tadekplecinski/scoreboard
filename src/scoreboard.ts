@@ -1,12 +1,12 @@
 import { generateId } from "./utils";
 
 export interface Match {
-  homeTeam: string;
-  awayTeam: string;
+  readonly homeTeam: string;
+  readonly awayTeam: string;
   homeScore: number;
   awayScore: number;
-  startTime: Date;
-  id: string;
+  readonly startTime: Date;
+  readonly id: string;
 }
 
 export class Scoreboard {
@@ -40,6 +40,10 @@ export class Scoreboard {
   }
 
   updateScore(matchId: string, homeScore: number, awayScore: number) {
+    if (homeScore < 0 || awayScore < 0) {
+      throw new Error("Scores cannot be negative.");
+    }
+
     const match = this.matches.find((m) => m.id === matchId);
 
     if (!match) {

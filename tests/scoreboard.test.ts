@@ -54,6 +54,13 @@ describe("Scoreboard", () => {
         `Match with ID "${invalidMatchId}" not found for updating the score.`
       );
     });
+
+    it("should throw an error if either score is negative", () => {
+      const matchId = scoreboard.startMatch("Mexico", "Canada");
+      expect(() => scoreboard.updateScore(matchId, -1, -2)).toThrow(
+        "Scores cannot be negative."
+      );
+    });
   });
 
   describe("Match summary", () => {
