@@ -3,12 +3,18 @@
   "version": "1.0.0",
   "description": "An assignement aimed at creating a simple scoreboard",
   "main": "index.js",
-  "scripts": {
-    "test": "jest"
+  "type": "module",
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {}
   },
-  "author": "",
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+  },
+  "author": "Tadek Plecinski",
   "license": "ISC",
   "devDependencies": {
-    "jest": "^29.7.0"
+    "jest": "^29.7.0",
+    "jest-environment-node": "^29.7.0"
   }
 }
