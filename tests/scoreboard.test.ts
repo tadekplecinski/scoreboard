@@ -8,9 +8,21 @@ describe("Scoreboard", () => {
     scoreboard = new Scoreboard();
   });
 
-  test("should start a new match", () => {
-    scoreboard.startMatch("Mexico", "Canada");
-    expect(scoreboard.getSortedMatches().length).toBe(1);
+  describe("Start a match", () => {
+    test("should start a new match", () => {
+      scoreboard.startMatch("Mexico", "Canada");
+      expect(scoreboard.getSortedMatches().length).toBe(1);
+    });
+
+    test("should throw an error when a match between given teams is in progress", () => {
+      const homeTeam = "Mexico";
+      const awayTeam = "Canada";
+
+      scoreboard.startMatch(homeTeam, awayTeam);
+      expect(() => scoreboard.startMatch(awayTeam, homeTeam)).toThrow(
+        `A match between ${awayTeam} and ${homeTeam} is already in progress.`
+      );
+    });
   });
 
   describe("Finish a match", () => {

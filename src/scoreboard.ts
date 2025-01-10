@@ -13,6 +13,18 @@ export class Scoreboard {
   private matches: Match[] = [];
 
   startMatch(homeTeam: string, awayTeam: string): string {
+    const existingMatch = this.matches.find(
+      (match) =>
+        (match.homeTeam === homeTeam && match.awayTeam === awayTeam) ||
+        (match.homeTeam === awayTeam && match.awayTeam === homeTeam)
+    );
+
+    if (existingMatch) {
+      throw new Error(
+        `A match between ${homeTeam} and ${awayTeam} is already in progress.`
+      );
+    }
+
     const id = generateId();
 
     this.matches.push({
