@@ -42,7 +42,7 @@ export class Scoreboard {
     this.matches = this.matches.filter((m) => m.id !== matchId);
   }
 
-  getSummary(): Array<Match> {
+  getSummary(): Match[] {
     return this.matches;
   }
 }
