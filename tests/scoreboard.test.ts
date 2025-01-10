@@ -13,14 +13,14 @@ describe("Scoreboard", () => {
   });
 
   test("should update the score", () => {
-    scoreboard.startMatch("Mexico", "Canada");
-    scoreboard.updateScore("Mexico", "Canada", 1, 0);
+    const matchId = scoreboard.startMatch("Mexico", "Canada");
+    scoreboard.updateScore(matchId, 1, 0);
     expect(scoreboard.getSummary()[0].homeScore).toBe(1);
   });
 
   test("should finish a match", () => {
-    scoreboard.startMatch("Mexico", "Canada");
-    scoreboard.finishMatch("Mexico", "Canada");
+    const matchId = scoreboard.startMatch("Mexico", "Canada");
+    scoreboard.finishMatch(matchId);
     expect(scoreboard.getSummary().length).toBe(0);
   });
 });

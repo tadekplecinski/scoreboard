@@ -4,4 +4,5 @@ export default {
   transform: {
     "^.+\\.(ts|tsx)$": ["ts-jest"],
   },
+  testPathIgnorePatterns: ["/dist/"],
 };
