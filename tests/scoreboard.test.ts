@@ -9,12 +9,12 @@ describe("Scoreboard", () => {
   });
 
   describe("Start a match", () => {
-    test("should start a new match", () => {
+    it("should start a new match", () => {
       scoreboard.startMatch("Mexico", "Canada");
       expect(scoreboard.getSortedMatches().length).toBe(1);
     });
 
-    test("should throw an error when a match between given teams is in progress", () => {
+    it("should throw an error when a match between given teams is in progress", () => {
       const homeTeam = "Mexico";
       const awayTeam = "Canada";
 
@@ -26,7 +26,7 @@ describe("Scoreboard", () => {
   });
 
   describe("Finish a match", () => {
-    test("should finish a match", () => {
+    it("should finish a match", () => {
       const matchId = scoreboard.startMatch("Mexico", "Canada");
       scoreboard.finishMatch(matchId);
       expect(scoreboard.getSortedMatches().length).toBe(0);
@@ -35,14 +35,14 @@ describe("Scoreboard", () => {
     it("should throw an error if the match ID is not found", () => {
       const invalidMatchId = "invalid-id";
 
-      expect(() => scoreboard.finishMatch(invalidMatchId)).toThrowError(
-        'Match with ID "invalid-id" not found'
+      expect(() => scoreboard.finishMatch(invalidMatchId)).toThrow(
+        `Match with ID "${invalidMatchId}" not found`
       );
     });
   });
 
   describe("Update score", () => {
-    test("should update the score", () => {
+    it("should update the score", () => {
       const matchId = scoreboard.startMatch("Mexico", "Canada");
       scoreboard.updateScore(matchId, 1, 0);
       expect(scoreboard.getSortedMatches()[0].homeScore).toBe(1);
@@ -57,14 +57,23 @@ describe("Scoreboard", () => {
 
     it("should throw an error if either score is negative", () => {
       const matchId = scoreboard.startMatch("Mexico", "Canada");
-      expect(() => scoreboard.updateScore(matchId, -1, -2)).toThrow(
+
+      expect(() => scoreboard.updateScore(matchId, -1, 0)).toThrow(
+        "Scores cannot be negative."
+      );
+
+      expect(() => scoreboard.updateScore(matchId, 0, -1)).toThrow(
+        "Scores cannot be negative."
+      );
+
+      expect(() => scoreboard.updateScore(matchId, -1, -1)).toThrow(
         "Scores cannot be negative."
       );
     });
   });
 
   describe("Match summary", () => {
-    test("should return matches sorted by total score", () => {
+    it("should return matches sorted by total score", () => {
       const match1Id = scoreboard.startMatch("Mexico", "Canada");
       scoreboard.updateScore(match1Id, 1, 0);
 
@@ -75,7 +84,7 @@ describe("Scoreboard", () => {
       expect(summary[0].homeTeam).toBe("Spain");
     });
 
-    test("should return matches sorted by date if total score is equal", () => {
+    it("should return matches sorted by date if total score is equal", () => {
       jest.useFakeTimers();
 
       const match1Id = scoreboard.startMatch("Mexico", "Canada");
