@@ -8,6 +8,7 @@ This project implements a simple football scoreboard application that allows you
 - **Update Score**: Update the score of an ongoing match.
 - **Finish Match**: Mark a match as finished and remove it from the active match list.
 - **Match Sorting**: Get a sorted list of matches based on total score or start time.
+- **Formatted Summary**: Retrieve a formatted summary of matches as strings, sorted by total score and start time.
 - **Input Validation**: Prevents the starting of a match with the same teams, and ensures scores cannot be negative.
 
 ## Table of Contents
@@ -60,6 +61,20 @@ The matches can be sorted by total score or by start time using the `getSortedMa
 
 ```
 const sortedMatches = scoreboard.getSortedMatches();
+```
+
+### Formatted Summary
+
+You can retrieve a formatted summary of matches as strings, sorted by total score and start time, using the `getFormattedSummary` method.
+
+```
+const summary = scoreboard.getFormattedSummary();
+// Example Output:
+// [
+//   "Uruguay 6 - Italy 6",
+//   "Spain 10 - Brazil 2",
+//   "Mexico 0 - Canada 5",
+// ]
 ```
 
 ## Tests

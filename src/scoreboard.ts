@@ -79,4 +79,11 @@ export class Scoreboard {
   getSortedMatches(): Match[] {
     return [...this.matches].sort(this.sortMatches);
   }
+
+  getFormattedSummary(): string[] {
+    return this.getSortedMatches().map(
+      (match) =>
+        `${match.homeTeam} ${match.homeScore} - ${match.awayTeam} ${match.awayScore}`
+    );
+  }
 }

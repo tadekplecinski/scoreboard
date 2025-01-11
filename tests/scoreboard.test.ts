@@ -5,6 +5,11 @@ describe("Scoreboard", () => {
 
   beforeEach(() => {
     scoreboard = new Scoreboard();
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
   });
 
   describe("Start a match", () => {
@@ -84,8 +89,6 @@ describe("Scoreboard", () => {
     });
 
     it("should return matches sorted by date if total score is equal", () => {
-      jest.useFakeTimers();
-
       const match1Id = scoreboard.startMatch("Mexico", "Canada");
       scoreboard.updateScore(match1Id, 1, 0);
 
@@ -97,8 +100,43 @@ describe("Scoreboard", () => {
       const sortedMatches = scoreboard.getSortedMatches();
 
       expect(sortedMatches[0].homeTeam).toBe("Spain");
+    });
+  });
 
-      jest.useRealTimers();
+  describe("Formatted Summary", () => {
+    it("should return matches formatted as strings and sorted by score and start time", () => {
+      const match1Id = scoreboard.startMatch("Mexico", "Canada");
+      scoreboard.updateScore(match1Id, 0, 5);
+
+      jest.advanceTimersByTime(1000);
+
+      const match2Id = scoreboard.startMatch("Spain", "Brazil");
+      scoreboard.updateScore(match2Id, 10, 2);
+
+      jest.advanceTimersByTime(1000);
+
+      const match3Id = scoreboard.startMatch("Germany", "France");
+      scoreboard.updateScore(match3Id, 2, 2);
+
+      jest.advanceTimersByTime(1000);
+
+      const match4Id = scoreboard.startMatch("Uruguay", "Italy");
+      scoreboard.updateScore(match4Id, 6, 6);
+
+      jest.advanceTimersByTime(1000);
+
+      const match5Id = scoreboard.startMatch("Argentina", "Australia");
+      scoreboard.updateScore(match5Id, 3, 1);
+
+      const summary = scoreboard.getFormattedSummary();
+
+      expect(summary).toEqual([
+        "Uruguay 6 - Italy 6",
+        "Spain 10 - Brazil 2",
+        "Mexico 0 - Canada 5",
+        "Argentina 3 - Australia 1",
+        "Germany 2 - France 2",
+      ]);
     });
   });
 });
